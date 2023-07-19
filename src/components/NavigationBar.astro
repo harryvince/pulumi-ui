@@ -1,0 +1,15 @@
+---
+import { URL } from '../utils/helper';
+
+const bucketNameRequest = await fetch(`${URL()}/api/store`);
+const bucketName = (await bucketNameRequest.json()).name;
+---
+
+<nav>
+  <ul>
+    <li><strong>Pulumi S3 Self-Hosted UI</strong></li>
+  </ul>
+  <ul>
+    <li>{ bucketName }</li>
+  </ul>
+</nav>

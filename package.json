@@ -1,0 +1,21 @@
+{
+  "name": "pulumi-ui",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^5.3.0",
+    "@aws-sdk/client-s3": "^3.373.0",
+    "@picocss/pico": "^1.5.10",
+    "astro": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2"
+  }
+}

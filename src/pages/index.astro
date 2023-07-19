@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavigationBar from "../components/NavigationBar.astro";
+import Card from "../components/Card.astro";
+import { URL } from "../utils/helper";
+
+const stacksRequest = await fetch(`${URL()}/api/stacks`);
+const stacks = (await stacksRequest.json()).stacks;
+---
+
+<Layout title="Stacks">
+  <NavigationBar bucket_name="Test" />
+  <main>
+    <h1>Stacks</h1>
+    <div class="grid">
+      {stacks.map((item: string) => <Card title={item} />)}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    text-align: center;
+  }
+</style>
