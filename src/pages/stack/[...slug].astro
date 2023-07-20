@@ -3,8 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { URL } from "../../utils/helper";
 
 const { slug } = Astro.params;
-const stacksRequest = await fetch(`${URL()}/api/stacks`);
-const stacks = (await stacksRequest.json()).stacks;
+const stacks = await S3Controller.getStacks();
 const stack = stacks.find((stack: string) => stack === slug);
 if (!stack) return Astro.redirect("/");
 ---

@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
-import { URL } from "../utils/helper";
+import { S3Controller } from "../server/utils";
 
-const stacksRequest = await fetch(`${URL()}/api/stacks`);
-const stacks = (await stacksRequest.json()).stacks;
+const stacks = await S3Controller.getStacks();
 ---
 
 <Layout title="Stacks">
@@ -13,11 +12,12 @@ const stacks = (await stacksRequest.json()).stacks;
     <div class="container">
       <div class="grid-container">
         {
-          stacks.map((item: string) => (
-            <div class="card-container">
-              <Card title={item} />
-            </div>
-          ))
+          stacks &&
+            stacks.map((item) => (
+              <div class="card-container">
+                <Card title={item!} />
+              </div>
+            ))
         }
       </div>
     </div>
