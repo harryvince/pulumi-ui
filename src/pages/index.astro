@@ -10,8 +10,16 @@ const stacks = (await stacksRequest.json()).stacks;
 <Layout title="Stacks">
   <main>
     <h1>Stacks</h1>
-    <div class="grid">
-      {stacks.map((item: string) => <Card title={item} />)}
+    <div class="container">
+      <div class="grid-container">
+        {
+          stacks.map((item: string) => (
+            <div class="card-container">
+              <Card title={item} />
+            </div>
+          ))
+        }
+      </div>
     </div>
   </main>
 </Layout>
@@ -19,5 +27,23 @@ const stacks = (await stacksRequest.json()).stacks;
 <style>
   main {
     text-align: center;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+
+  /* Media query to switch to a stacked layout on smaller screens */
+  @media (max-width: 768px) {
+    .grid-container {
+      display: block;
+      grid-row-gap: 5px;
+    }
+
+    .card-container {
+      margin-bottom: 2rem;
+    }
   }
 </style>
