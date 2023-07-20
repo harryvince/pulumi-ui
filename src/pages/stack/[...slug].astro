@@ -32,7 +32,7 @@ if (envID) {
       <h1>{slug}</h1>
       <p>{(envID) ? envID : 'Environments'}</p>
     </hgroup>
-    <div class="container">
+    <div class="container-fluid">
       {
         (environments && !envID) ?
           environments.map((item) => (

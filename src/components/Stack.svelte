@@ -19,6 +19,7 @@
     <table>
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Type</th>
                 <th scope="col">Created</th>
                 <th scope="col">Modified</th>
@@ -29,6 +30,7 @@
                 {#each data.checkpoint.latest.resources as resource}
                     {#if resource.id && !resource.type.includes("providers")}
                         <tr>
+                            <td>{resource.id}</td>
                             <td>{resource.type}</td>
                             <td>{resource.created}</td>
                             <td>{resource.modified}</td>
