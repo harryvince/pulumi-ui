@@ -4,9 +4,10 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const link = `/stack/${title}`;
 ---
 
-<article>{title}</article>
+<article><a href={link}>{title}</a></article>
 
 <style>
   article {
