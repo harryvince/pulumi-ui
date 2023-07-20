@@ -14,7 +14,7 @@ const url = (link === 'STACK') ? `/stack/${title}` :
                     `/stack/${Astro.props.stack}?env=${Astro.props.env}`;
 ---
 
-<article><a href={url}>{title}</a></article>
+<a href={url}><article>{title}</article></a>
 
 <style>
   article {
