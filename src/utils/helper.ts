@@ -24,6 +24,19 @@ export class Helper {
     }
   }
 
+  public parseUrlParameters = (url: string) => {
+    if (url.includes('?')) {
+      const parameters = url.split('?')[1];
+      const arrayOfParameters = parameters.split('&');
+      let result = new Map();
+      arrayOfParameters.forEach(parameter => {
+        const [key, value] = parameter.split('=');
+        result.set(key, value);
+      });
+      return result;
+    }
+  }
+
   public log = (message: string) => {
     const now = new Date();
     const isoDateTime = now.toISOString();

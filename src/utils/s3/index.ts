@@ -1,4 +1,4 @@
-import { S3Client, ListObjectsV2Command, ListObjectsV2Request, _Object } from "@aws-sdk/client-s3";
+import { S3Client, ListObjectsV2Command, ListObjectsV2Request, _Object, GetObjectRequest, GetObjectCommand } from "@aws-sdk/client-s3";
 import type { EnvironmentObjectType } from "./types";
 import { HelperController } from "../../server/utils";
 
@@ -11,6 +11,18 @@ export class S3Helper {
     this.bucket = bucket;
     this.pulumiStore = '.pulumi';
   }
+
+  private async getObject(Key: string) {
+    const input: GetObjectRequest = {
+      Bucket: this.bucket,
+      Key 
+    };
+
+    const command = new GetObjectCommand(input);
+    const response = await this.client.send(command);
+
+    return await response.Body?.transformToString();
+  };
 
   private async listKeys(location: string) {
     const Prefix = `${this.pulumiStore}/${location}/`;
@@ -105,6 +117,12 @@ export class S3Helper {
       HelperController.log('Unable to find any Environments');
     }
     return items;
+  }
+
+  public async getState(Key: string) {
+    const item = await this.getObject(Key);
+    console.log(item)
+    return item;
   }
 
 }

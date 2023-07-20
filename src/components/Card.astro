@@ -11,7 +11,7 @@ type Props =  {
 
 const { title, link } = Astro.props;
 const url = (link === 'STACK') ? `/stack/${title}` : 
-                    `/stack/${Astro.props.stack}/environment/${Astro.props.env}`;
+                    `/stack/${Astro.props.stack}?env=${Astro.props.env}`;
 ---
 
 <article><a href={url}>{title}</a></article>

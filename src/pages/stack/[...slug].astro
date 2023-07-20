@@ -1,32 +1,46 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
-import { S3Controller } from "../../server/utils";
+import Stack from "../../components/Stack.svelte";
+import { S3Controller, HelperController } from "../../server/utils";
 
 // Slug Logic
 const { slug } = Astro.params;
 const stacks = await S3Controller.getStacks();
-const stack = stacks.find((stack) => stack === slug);
+const stack = stacks.find((stack: string) => stack === slug);
 if (!stack) return Astro.redirect("/");
 
 // Environments Logic
 const environments = await S3Controller.getEnvironments(stack);
+const parameters = HelperController.parseUrlParameters(Astro.request.url);
+const envID = (parameters) && parameters.get('env');
+
+let fileKey;
+
+if (envID) {
+    environments.forEach(async(item) => {
+        if (item.Name === envID) {
+            fileKey = item.Key;
+        }
+    });
+}
 ---
 
 <Layout title={slug! + " Stack"}>
   <main>
     <hgroup>
       <h1>{slug}</h1>
-      <p>Environments</p>
+      <p>{(envID) ? envID : 'Environments'}</p>
     </hgroup>
     <div class="container">
       {
-        environments &&
+        (environments && !envID) ?
           environments.map((item) => (
             <div class="card-container">
               <Card title={item.Name!} link="ENVIRONMENT" stack={stack} env={item.Name!} />
             </div>
-          ))
+          )) :
+          <Stack fileKey={fileKey} client:load />
       }
     </div>
   </main>
