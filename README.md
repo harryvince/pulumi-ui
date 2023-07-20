@@ -1,6 +1,12 @@
 # Pulumi S3 State Backend UI Tool
 
+## Pre-Requisites
+- Default AWS Profile configured + Region
+- Node
+- PNPM
+
 ```
+pnpm i
 pnpm dev
 ```
 
