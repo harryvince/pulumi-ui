@@ -15,6 +15,7 @@
 </script>
 
 <article aria-busy={fileKey.trim() !== "" ? false : true}>
+    <h3 aria-busy={(data) ? false : true}>{(data) ? `Version: ${data.version}` : ''}</h3>
     <table>
         <thead>
             <tr>
