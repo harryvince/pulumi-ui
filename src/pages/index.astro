@@ -15,7 +15,7 @@ const stacks = await S3Controller.getStacks();
           stacks &&
             stacks.map((item) => (
               <div class="card-container">
-                <Card title={item!} />
+                <Card title={item!} link="STACK"/>
               </div>
             ))
         }

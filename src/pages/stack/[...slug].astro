@@ -1,21 +1,42 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card.astro";
 import { S3Controller } from "../../server/utils";
 
+// Slug Logic
 const { slug } = Astro.params;
 const stacks = await S3Controller.getStacks();
 const stack = stacks.find((stack) => stack === slug);
 if (!stack) return Astro.redirect("/");
+
+// Environments Logic
+const environments = await S3Controller.getEnvironments(stack);
 ---
 
 <Layout title={slug! + " Stack"}>
   <main>
-    <h1>{slug}</h1>
+    <hgroup>
+      <h1>{slug}</h1>
+      <p>Environments</p>
+    </hgroup>
+    <div class="container">
+      {
+        environments &&
+          environments.map((item) => (
+            <div class="card-container">
+              <Card title={item.Name!} link="ENVIRONMENT" stack={stack} env={item.Name!} />
+            </div>
+          ))
+      }
+    </div>
   </main>
 </Layout>
 
 <style>
   main {
     text-align: center;
+  }
+  .card-container {
+    margin-bottom: 2rem;
   }
 </style>

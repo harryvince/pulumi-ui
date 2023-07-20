@@ -1,13 +1,20 @@
 ---
-interface Props {
+type Props =  {
   title: string;
-}
+  link: 'STACK';
+} | {
+  title: string;
+  link: 'ENVIRONMENT';
+  env: string;
+  stack: string;
+};
 
-const { title } = Astro.props;
-const link = `/stack/${title}`;
+const { title, link } = Astro.props;
+const url = (link === 'STACK') ? `/stack/${title}` : 
+                    `/stack/${Astro.props.stack}/environment/${Astro.props.env}`;
 ---
 
-<article><a href={link}>{title}</a></article>
+<article><a href={url}>{title}</a></article>
 
 <style>
   article {
