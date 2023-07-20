@@ -1,10 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { URL } from "../../utils/helper";
+import { S3Controller } from "../../server/utils";
 
 const { slug } = Astro.params;
 const stacks = await S3Controller.getStacks();
-const stack = stacks.find((stack: string) => stack === slug);
+const stack = stacks.find((stack) => stack === slug);
 if (!stack) return Astro.redirect("/");
 ---
 
