@@ -121,7 +121,6 @@ export class S3Helper {
 
   public async getState(Key: string) {
     const item = await this.getObject(Key);
-    console.log(item)
     return item;
   }
 
