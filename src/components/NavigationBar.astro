@@ -1,5 +1,6 @@
 ---
 const bucketName = import.meta.env.BUCKET;
+const directory = import.meta.env.DIRECTORY;
 ---
 
 <nav>
@@ -7,6 +8,6 @@ const bucketName = import.meta.env.BUCKET;
     <li><strong><a href="/">Pulumi S3 Self-Hosted UI</a></strong></li>
   </ul>
   <ul>
-    <li>{bucketName}</li>
+    <li>{bucketName}{directory ? `/${directory}` : ''}</li>
   </ul>
 </nav>
