@@ -1,3 +1,4 @@
+
 import { S3Client, ListObjectsV2Command, ListObjectsV2Request, _Object, GetObjectRequest, GetObjectCommand } from "@aws-sdk/client-s3";
 import type { EnvironmentObjectType } from "./types";
 import { HelperController } from "../../server/utils";
@@ -6,16 +7,18 @@ export class S3Helper {
   private client = new S3Client({});
   private bucket: string;
   private pulumiStore: string;
+  private directory: string | null;
 
-  constructor(bucket: string) {
+  constructor(bucket: string, directory: string | null = null) {
     this.bucket = bucket;
+    this.directory = directory;
     this.pulumiStore = '.pulumi';
   }
 
   private async getObject(Key: string) {
     const input: GetObjectRequest = {
       Bucket: this.bucket,
-      Key 
+      Key
     };
 
     const command = new GetObjectCommand(input);
@@ -25,7 +28,7 @@ export class S3Helper {
   };
 
   private async listKeys(location: string) {
-    const Prefix = `${this.pulumiStore}/${location}/`;
+    const Prefix = this.directory ? `${this.directory}/${this.pulumiStore}/${location}/` : `${this.pulumiStore}/${location}/`;
     const input: ListObjectsV2Request = {
       Bucket: this.bucket,
       Prefix,
@@ -57,7 +60,7 @@ export class S3Helper {
   }
 
   private async listFolders(location: string) {
-    const Prefix = `${this.pulumiStore}/${location}/`;
+    const Prefix = this.directory ? `${this.directory}/${this.pulumiStore}/${location}/` : `${this.pulumiStore}/${location}/`;
     const input: ListObjectsV2Request = {
       Bucket: this.bucket,
       Delimiter: `/`,
