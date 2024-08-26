@@ -1,5 +1,6 @@
 
-import { S3Client, ListObjectsV2Command, ListObjectsV2Request, _Object, GetObjectRequest, GetObjectCommand } from "@aws-sdk/client-s3";
+import type { ListObjectsV2Request, GetObjectRequest, _Object } from "@aws-sdk/client-s3"
+import { S3Client, ListObjectsV2Command, GetObjectCommand } from "@aws-sdk/client-s3";
 import type { EnvironmentObjectType } from "./types";
 import { HelperController } from "../../server/utils";
 

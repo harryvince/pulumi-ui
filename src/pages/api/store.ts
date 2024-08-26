@@ -1,9 +1,9 @@
-import type { APIRoute } from "astro"
+import type { APIRoute } from "astro";
 
-export const get: APIRoute = ({ params, request }) => {
-  return {
-    body: JSON.stringify({
+export const GET: APIRoute = ({ params, request }) => {
+  return new Response(
+    JSON.stringify({
       name: import.meta.env.BUCKET,
-    }),
-  }
-}
+    })
+  );
+};
