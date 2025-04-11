@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { Button } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
 
 const filePath = "count.txt";
 
@@ -34,15 +34,18 @@ function Home() {
 	const state = Route.useLoaderData();
 
 	return (
-		<Button
-			type="button"
-			onClick={() => {
-				updateCount({ data: 1 }).then(() => {
-					router.invalidate();
-				});
-			}}
-		>
-			Add 1 to {state}?
-		</Button>
+		// Center everything on the page
+		<div className="flex justify-center items-center">
+			<Button
+				type="button"
+				onClick={() => {
+					updateCount({ data: 1 }).then(() => {
+						router.invalidate();
+					});
+				}}
+			>
+				Add 1 to {state}?
+			</Button>
+		</div>
 	);
 }
