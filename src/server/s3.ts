@@ -114,10 +114,14 @@ export class S3Helper {
 		return wrapResult(true, results);
 	}
 
-	public async getStacks() {
+	public async getStacks(): Promise<string[]> {
 		const folders = await this.listFolders("stacks");
+		logger.info(folders);
 		if (folders.success) return folders.value;
-		else logger.warn("Unable to find any Stacks");
+		else {
+			logger.warn("Unable to find any Stacks");
+		}
+		return [];
 	}
 
 	public async getEnvironments(stack: string) {
@@ -138,6 +142,7 @@ export class S3Helper {
 		} else {
 			logger.warn("Unable to find any Environments");
 		}
+		logger.info(items);
 		return items;
 	}
 

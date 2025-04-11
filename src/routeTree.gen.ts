@@ -12,12 +12,26 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as StacksNameIndexImport } from './routes/stacks/$name/index'
+import { Route as StacksNameResourcesImport } from './routes/stacks/$name/resources'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StacksNameIndexRoute = StacksNameIndexImport.update({
+  id: '/stacks/$name/',
+  path: '/stacks/$name/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StacksNameResourcesRoute = StacksNameResourcesImport.update({
+  id: '/stacks/$name/resources',
+  path: '/stacks/$name/resources',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +46,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/stacks/$name/resources': {
+      id: '/stacks/$name/resources'
+      path: '/stacks/$name/resources'
+      fullPath: '/stacks/$name/resources'
+      preLoaderRoute: typeof StacksNameResourcesImport
+      parentRoute: typeof rootRoute
+    }
+    '/stacks/$name/': {
+      id: '/stacks/$name/'
+      path: '/stacks/$name'
+      fullPath: '/stacks/$name'
+      preLoaderRoute: typeof StacksNameIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/stacks/$name/resources': typeof StacksNameResourcesRoute
+  '/stacks/$name': typeof StacksNameIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/stacks/$name/resources': typeof StacksNameResourcesRoute
+  '/stacks/$name': typeof StacksNameIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/stacks/$name/resources': typeof StacksNameResourcesRoute
+  '/stacks/$name/': typeof StacksNameIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/stacks/$name/resources' | '/stacks/$name'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/stacks/$name/resources' | '/stacks/$name'
+  id: '__root__' | '/' | '/stacks/$name/resources' | '/stacks/$name/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  StacksNameResourcesRoute: typeof StacksNameResourcesRoute
+  StacksNameIndexRoute: typeof StacksNameIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  StacksNameResourcesRoute: StacksNameResourcesRoute,
+  StacksNameIndexRoute: StacksNameIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/stacks/$name/resources",
+        "/stacks/$name/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/stacks/$name/resources": {
+      "filePath": "stacks/$name/resources.tsx"
+    },
+    "/stacks/$name/": {
+      "filePath": "stacks/$name/index.tsx"
     }
   }
 }
