@@ -11,6 +11,6 @@ export const logger = createLogger({
 });
 
 export const s3 = new S3Helper(
-	process.env["BUCKET"] as string,
-	process.env["DIRECTORY"],
+	process.env.BUCKET as string,
+	process.env.DIRECTORY,
 );

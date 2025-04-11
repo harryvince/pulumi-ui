@@ -8,6 +8,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { wrapResult } from "./utils";
 import { logger } from "./clients";
+import type { PulumiCheckpoint } from "@/types";
 
 export type EnvironmentType = {
 	[key: string]: EnvironmentObjectType;
@@ -148,6 +149,6 @@ export class S3Helper {
 
 	public async getState(Key: string) {
 		const item = await this.getObject(Key);
-		return item;
+		return JSON.parse(item as string) as unknown as PulumiCheckpoint;
 	}
 }
