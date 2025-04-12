@@ -1,5 +1,7 @@
 # build output
 dist/
+.output/
+.vinxi/
 
 # generated types
 .astro/
