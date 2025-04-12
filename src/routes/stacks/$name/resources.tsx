@@ -1,17 +1,9 @@
-import {
-	Card,
-	Code,
-	List,
-	Stack,
-	Tabs,
-	Text,
-	DataList,
-} from "@chakra-ui/react";
+import { Card, DataList, List, Stack, Tabs, Text } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { Layers, Package, ReceiptText } from "lucide-react";
-import { z } from "zod";
 import React from "react";
+import { z } from "zod";
 
 import { s3 } from "@/server/clients";
 import { State } from "@/server/pulumi";
