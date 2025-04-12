@@ -1,5 +1,7 @@
 # build output
 dist/
+.output/
+.vinxi/
 
 # generated types
 .astro/
@@ -22,3 +24,5 @@ pnpm-debug.log*
 
 # IDE related files
 .idea
+
+sample.json
