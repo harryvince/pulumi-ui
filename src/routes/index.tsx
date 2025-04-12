@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Card, Heading, Stack, Text } from "@chakra-ui/react";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { Stack, Card, Text, Heading } from "@chakra-ui/react";
 
 import { s3 } from "@/server/clients";
 
@@ -28,7 +28,7 @@ function Home() {
 				<Card.Root key={item} minW="lg">
 					<Card.Body>
 						<Text>
-							<Link to={`/stacks/$name`} params={{ name: item }}>
+							<Link to={"/stacks/$name"} params={{ name: item }}>
 								{item}
 							</Link>
 						</Text>

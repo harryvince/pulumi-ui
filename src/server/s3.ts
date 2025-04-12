@@ -1,14 +1,14 @@
+import type { PulumiCheckpoint } from "@/types";
 import {
-	S3Client,
-	ListObjectsV2Command,
 	GetObjectCommand,
-	type ListObjectsV2Request,
 	type GetObjectRequest,
+	ListObjectsV2Command,
+	type ListObjectsV2Request,
+	S3Client,
 	type _Object,
 } from "@aws-sdk/client-s3";
-import { wrapResult } from "./utils";
 import { logger } from "./clients";
-import type { PulumiCheckpoint } from "@/types";
+import { wrapResult } from "./utils";
 
 export type EnvironmentType = {
 	[key: string]: EnvironmentObjectType;
@@ -51,17 +51,17 @@ export class S3Helper {
 			Prefix,
 		};
 
-		let results = new Array<_Object>();
+		const results = new Array<_Object>();
 
 		while (true) {
 			const command = new ListObjectsV2Command(input);
 			const response = await this.client.send(command);
 
-			response.Contents?.forEach((item) => {
+			for (const item of response.Contents || []) {
 				if (!item.Key?.includes(".bak")) {
 					results.push(item);
 				}
-			});
+			}
 
 			if (response.IsTruncated) {
 				input.ContinuationToken = response.NextContinuationToken;
@@ -82,24 +82,26 @@ export class S3Helper {
 			: `${this.pulumiStore}/${location}/`;
 		const input: ListObjectsV2Request = {
 			Bucket: this.bucket,
-			Delimiter: `/`,
+			Delimiter: "/",
 			Prefix,
 		};
 
-		let results = new Array<string>();
+		const results = new Array<string>();
 
 		while (true) {
 			const command = new ListObjectsV2Command(input);
 			const response = await this.client.send(command);
 
-			response.CommonPrefixes?.forEach((item) => {
-				const splitOutput = item.Prefix!.split("/");
+			for (const item of response.CommonPrefixes || []) {
+				const splitOutput = item.Prefix?.split("/");
 				// Weird whitespace issue for final character
-				splitOutput.pop();
+				splitOutput?.pop();
 
-				const cleansedOutput = splitOutput[splitOutput?.length - 1];
-				results.push(cleansedOutput as string);
-			});
+				if (splitOutput && splitOutput.length > 0) {
+					const cleansedOutput = splitOutput[splitOutput?.length - 1];
+					results.push(cleansedOutput as string);
+				}
+			}
 
 			if (response.IsTruncated) {
 				input.ContinuationToken = response.NextContinuationToken;
@@ -119,9 +121,7 @@ export class S3Helper {
 		const folders = await this.listFolders("stacks");
 		logger.info(folders);
 		if (folders.success) return folders.value;
-		else {
-			logger.warn("Unable to find any Stacks");
-		}
+		logger.warn("Unable to find any Stacks");
 		return [];
 	}
 
@@ -130,8 +130,8 @@ export class S3Helper {
 
 		const items = new Array<EnvironmentObjectType>();
 		if (results.success) {
-			results.value.forEach((item: EnvironmentObjectType) => {
-				const splitBySlash = item.Key!.split("/");
+			for (const item of results.value) {
+				const splitBySlash = item.Key?.split("/");
 				const splitBySlashLength = splitBySlash.length;
 				const environmentName = splitBySlash[splitBySlashLength - 1];
 				const splitByFullstop = environmentName?.split(".");
@@ -139,7 +139,7 @@ export class S3Helper {
 					item.Name = splitByFullstop[0];
 					items.push(item);
 				}
-			});
+			}
 		} else {
 			logger.warn("Unable to find any Environments");
 		}
