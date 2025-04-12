@@ -16,4 +16,22 @@ export namespace State {
 		});
 		return userFriendlyProviders;
 	};
+
+	export const getResources = (state: PulumiCheckpoint) => {
+		const resources = state.checkpoint.latest.resources;
+		const filteredResources = resources.filter(
+			(item) =>
+				!item.type.includes("pulumi:providers") &&
+				!item.type.includes("pulumi:pulumi:Stack"),
+		);
+		return filteredResources;
+	};
+
+	export const getStacks = (state: PulumiCheckpoint) => {
+		const resources = state.checkpoint.latest.resources;
+		const filteredResources = resources.filter((item) =>
+			item.type.includes("pulumi:pulumi:Stack"),
+		);
+		return filteredResources;
+	};
 }
