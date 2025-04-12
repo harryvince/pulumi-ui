@@ -1,9 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
-import { Tabs, Stack, Card, Text, Icon } from "@chakra-ui/react";
+import { Tabs, Stack, Card, Text } from "@chakra-ui/react";
 import { z } from "zod";
 import { Package, ReceiptText, Layers } from "lucide-react";
-import platformicons from "platformicons";
 
 import { s3 } from "@/server/clients";
 import { State } from "@/server/pulumi";
@@ -54,9 +53,6 @@ function RouteComponent() {
 						{data.providers.map((item) => (
 							<Card.Root key={item.name} minW="lg">
 								<Card.Body>
-									<Icon>
-										{platformicons.PlatformIcon({ platform: item.name })}
-									</Icon>
 									<Text>
 										{item.name} - {item.version}
 									</Text>
