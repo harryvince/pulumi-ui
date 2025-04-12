@@ -7,9 +7,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  "Check for use of pre-commit hooks":
+  Pre-commit:
     if: github.actor != 'renovate[bot]'
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
