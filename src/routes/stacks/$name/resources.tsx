@@ -1,4 +1,12 @@
-import { Card, DataList, List, Stack, Tabs, Text } from "@chakra-ui/react";
+import {
+	Badge,
+	Card,
+	DataList,
+	List,
+	Stack,
+	Tabs,
+	Text,
+} from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { Layers, Package, ReceiptText } from "lucide-react";
@@ -71,7 +79,7 @@ function RouteComponent() {
 
 	return (
 		<div>
-			<Tabs.Root defaultValue="providers">
+			<Tabs.Root defaultValue="providers" pb={8}>
 				<Tabs.List>
 					<Tabs.Trigger value="providers">
 						<Package />
@@ -104,7 +112,7 @@ function RouteComponent() {
 						{data.resources.map((item) => (
 							<Card.Root key={item.urn} minW="6xl">
 								<Card.Body>
-									<DataList.Root>
+									<DataList.Root pb={4}>
 										{(["id", "type"] as const).map((label) => (
 											<DataList.Item key={label}>
 												<DataList.ItemLabel>{label}</DataList.ItemLabel>
@@ -112,6 +120,11 @@ function RouteComponent() {
 											</DataList.Item>
 										))}
 									</DataList.Root>
+									{item.protect && (
+										<Badge maxW="min-content" colorPalette="purple">
+											Protected
+										</Badge>
+									)}
 								</Card.Body>
 							</Card.Root>
 						))}
